@@ -25,8 +25,8 @@ val INCREASING_SUBLIST = store_thm(
 	``!x y. (increasing (x::y)) /\ (y <> []) ==>
                                        increasing y``,	
   rw[increasing_def]
-  >>Cases_on `y`
-  >>fs[increasing_def]
+  >> Cases_on `y`
+  >> fs[increasing_def]
   );
 
 (* LEMMA ABOUT SNOCING ON TO END OF INCREASING LIST *)
@@ -43,11 +43,12 @@ val SNOC_LEMMA = store_thm(
   (* g1 *)
   >- fs[increasing_def]
   (* g2 *)
-  >-(first_x_assum irule
-     (* subgoal a*)
-     >-(fs[]>> metis_tac[])
-     (* subgoal b *)
-     >-(fs[increasing_def]))
+  >- (first_x_assum irule
+      >> rpt conj_tac
+      (* subgoal a*)
+      >-(fs[]>> metis_tac[])
+      (* subgoal b *)
+      >-(fs[increasing_def]))
   );
 
 (* LEMMA ABOUT GENLIST BEING INCREASING *)
@@ -58,6 +59,7 @@ val GENLIST_SUC_INC = store_thm(
   >-fs[]
   >-(rw[GENLIST,increasing_def]
      >> irule SNOC_LEMMA
+     >> rpt conj_tac
       >-rw[MEM_GENLIST]
       >-(Cases_on `x` >> rw[]))
   );
@@ -99,6 +101,7 @@ val HEAD_INC_MIN = store_thm(
                           Induct_on `l`>> rw[increasing_def, INC_CONS_THM]
                           >- rw[pred_setTheory.MIN_SET_THM]
                           >- (irule arithmeticTheory.LESS_EQUAL_ANTISYM
+                              >> rpt conj_tac
                               >- rw[pred_setTheory.MIN_SET_LEM]
                               >- (`MIN_SET (h INSERT set l) IN h INSERT set l`
                                   by simp[pred_setTheory.MIN_SET_LEM]

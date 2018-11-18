@@ -18,6 +18,7 @@ val MIN_SET_UPPER_BOUND = store_thm(
      ==> (MIN_SET s <= l)``,
     rw[]
     >> irule LESS_EQ_TRANS
+    >> rpt conj_tac
     >> Cases_on `s`
     >> fs[]
     >> qexists_tac `x`

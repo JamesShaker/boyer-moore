@@ -68,6 +68,7 @@ val CMVAL_THM = Q.prove(
             by (drule FILTER_INC_PRES >> metis_tac[])
     >> fs[]
     >> irule HEAD_INC_MIN
+    >> rpt conj_tac
     >> fs[]
     );
 
@@ -175,6 +176,7 @@ val SMVAL_THM = Q.prove(
        
     >> fs[]
     >> irule HEAD_INC_MIN
+    >> rpt conj_tac
     >> `increasing (GENLIST SUC (LENGTH pat))`
             by (irule GENLIST_SUC_INC >> Cases_on `pat` >> fs[])
     >> `increasing (FILTER (checkDeltaS pat j) (GENLIST SUC (LENGTH pat)))`
@@ -471,6 +473,7 @@ val BMSEARCH_THM = Q.prove(
     `bmSearch pat search = solution pat search`,
     simp[bmSearch_def]
     >> irule BMRECUR_THM
+    >> rpt conj_tac
     >- metis_tac [MTAB_THM]
     >- rw [MTAB_BND]
     >- rw [MTAB_DIM]

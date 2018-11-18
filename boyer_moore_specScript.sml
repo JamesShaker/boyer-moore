@@ -225,6 +225,7 @@ val CHA_SKIP_NOT_SOL = store_thm(
                             DECIDE ``a < b /\ b <= a ==> F``]
     >> `d < j + 1`
             by (irule MIN_SET_IS_LOWER_BOUND
+                >> rpt conj_tac
                 >> qexists_tac `valid_cha_shifts pat all_chars j a`
                 >> rw[valid_cha_shifts_def])
     >> fs[valid_cha_shifts_def]
@@ -318,6 +319,7 @@ val SUF_SKIP_NOT_SOL = store_thm(
             >-(`MIN_SET (valid_suf_shifts pat j) <= LENGTH pat`
                     suffices_by simp[]
                 >> irule MIN_SET_UPPER_BOUND
+                >> rpt conj_tac
                 >- rw[valid_suf_shifts_def]
                 >- simp[SUF_SHIFT_EXISTS_THM])
             )
