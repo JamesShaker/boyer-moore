@@ -43,33 +43,14 @@ val CHECK_DELTAC_SET = Q.prove(
     );
 
 (* Find minimum valid character mismatch based shift *)
-val cmRecur_def =
-    Hol_defn "cmRecur"
-    `
-    cmRecur pat all_chars j a d =
-        if (j+1 < d) then d
-        else if (checkDeltaC pat all_chars j a d) then d
-        else (cmRecur pat all_chars j a (d+1))
-    `;
-Defn.tgoal cmRecur_def;
-e(WF_REL_TAC `measure (\x. (SUC ∘ FST ∘ SND ∘ SND) x - (SND ∘ SND ∘ SND ∘ SND) x)`);
-e(fs[ADD1,checkDeltaC_def]);
-
-
 val cmVal_def =
     Define
     `
-    cmVal pat all_chars j a = cmRecur pat all_chars j a 1
+    cmVal pat all_chars j a =
+        HD (FILTER (checkDeltaC pat all_chars j a) (GENLIST SUC (j+1)))
     `;
 
 (* Relationship between cmVal function and valid_cha_shift specification *)
-g `(x < MIN_SET (valid_cha_shifts pat all_chars j a)) ==> (cmRecur pat all_chars j a x = MIN_SET (valid_cha_shifts pat all_chars j a))`;
-e(fs[]);
-
-g `cmVal pat all_chars j a = MIN_SET (valid_cha_shifts pat all_chars j a)`;
-e(simp[cmVal_def]);
-e(Induct_on `d`)
-
 val CMVAL_THM = Q.prove(
     `cmVal pat all_chars j a = MIN_SET (valid_cha_shifts pat all_chars j a)`,
     simp[cmVal_def]
@@ -172,18 +153,11 @@ val CHECK_DELTAS_SET = Q.prove(
 
 
 (* Find minimum valid suffix mismatch based shift *)
-val smRecur_def =
-    Define
-    `
-    smRecur pat j d =
-        if (checkDeltaS pat j d) then d
-        else (smRecur pat j (d+1))
-    `;
-
 val smVal_def =
     Define
     `
-    smVal pat j = smRecur pat j 1
+    smVal pat j =
+        HD (FILTER (checkDeltaS pat j) (GENLIST SUC (LENGTH pat)))
     `;
 
 (* Relationship between smVal function and valid_suf_shift specification *)

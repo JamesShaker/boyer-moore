@@ -8,7 +8,7 @@ open pred_setTheory;
 open pairTheory;
 open boolTheory;
 
-load "../../boyer-moore-hol/final_source/set_lemmasTheory";
+load "set_lemmasTheory";
 open set_lemmasTheory;
 
 val _ = new_theory"boyer_moore_spec";
