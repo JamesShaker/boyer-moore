@@ -91,7 +91,7 @@ val CMVAL_VEC_COR_THM = store_thm(
 val checkDeltaSVec_def =
     Define
     `
-    checkDeltaSVec pat j d = 
+    checkDeltaSVec pat j d =
         (((d >= SUC j) \/ ~(sub pat (j-d) = sub pat j)) /\
         (extractVec (MAX (SUC j) d,length pat) pat
             = extractVec ((MAX (SUC j) d) - d,length pat - d) pat))
@@ -255,7 +255,7 @@ val bmRecurVec_def =
 	                        then
 	                            (length search - i + 1)
 	                        else
-	                            let 
+	                            let
 	                                (d = sub (sub patTab j) a)
 	                            in
 	                                if
@@ -268,7 +268,7 @@ val bmRecurVec_def =
     `
     (WF_REL_TAC `measure (\(_, _, _, search, i). length search - i)`
     >> rw[DROP]);
- 
+
 val BMRECUR_VEC_COR_THM = store_thm(
     "BMRECUR_VEC_COR_THM",
     ``! pat all_chars patTabVec patTabLst search i.
@@ -469,7 +469,7 @@ val bmRecurVecString_def =
 	                        then
 	                            (length search - i + 1)
 	                        else
-	                            let 
+	                            let
 	                                (d = sub (sub patTab j) a)
 	                            in
 	                                if
@@ -493,7 +493,7 @@ val BMRECUR_VEC_STRING_COR_THM = store_thm(
 			suffices_by rw[]
 	>> STRIP_TAC
 	>> `findElem (toList alphabetVec) c = ORD c`
-			suffices_by rw[FIND_ELEM_VEC_COR_THM] 
+			suffices_by rw[FIND_ELEM_VEC_COR_THM]
 	>> `toList alphabetVec = alphabet`
 			suffices_by rw[ALPHABET_FIND_THM]
 	>> ONCE_REWRITE_TAC[alphabetVec_def,alphabet_def]

@@ -201,7 +201,7 @@ val checkPrefixRLVec_def =
         if
             length pat <= length search
         then
-            checkPrefixRLVecRecur pat search 0 
+            checkPrefixRLVecRecur pat search 0
         else
             length pat + 1
     `;
@@ -258,7 +258,7 @@ val CHECK_PREFIX_RL_VEC_COR_THM = store_thm(
                     >> `EL (PRE (LENGTH P - i)) P = EL (PRE (LENGTH P - i)) fS`
                             by (`LENGTH P = LENGTH fS`
                                     by rw[Abbr `P`, Abbr `fS`, Abbr `Se`, LENGTH_TAKE]
-                                >> metis_tac[]) 
+                                >> metis_tac[])
                     >> `PRE (LENGTH P - i) = j`
                             by rw[Abbr `i`]
                     >> fs[])
@@ -271,7 +271,7 @@ val CHECK_PREFIX_RL_VEC_COR_THM = store_thm(
                     >> `sub pat j = EL j P`
                             by rw[sub_def,fromList_def]
                     >> `fromList Se = search`
-                            by rw[Abbr `Se`, toList_fromList] 
+                            by rw[Abbr `Se`, toList_fromList]
                     >> `sub search j = EL j Se`
                             by rw[sub_def,fromList_def]
                     >> `j < LENGTH P`
@@ -329,9 +329,9 @@ val CHECK_PREFIX_RL_VEC_COR_THM = store_thm(
                                     >> rw[DECIDE ``PRE a - b = PRE (a - b)``])
                         >> simp[])
                     >- (`fromList Se = search`
-                            by rw[Abbr `Se`, toList_fromList] 
+                            by rw[Abbr `Se`, toList_fromList]
                         >> `sub search (PRE (length pat) - x) = EL (PRE (length pat) - x) Se`
-                                by rw[sub_def,fromList_def]  
+                                by rw[sub_def,fromList_def]
                         >> `EL (PRE (length pat) - x) Se = EL (PRE (length pat) - x) (TAKE (length pat) Se)`
                                 by rw[EL_TAKE]
                         >> `length pat > 0`
@@ -419,7 +419,7 @@ val checkPrefixRLVecShift_def =
         if
             length pat <= length search - shift
         then
-            checkPrefixRLVecShiftRecur pat search shift 0 
+            checkPrefixRLVecShiftRecur pat search shift 0
         else
             length pat + 1
     `;
