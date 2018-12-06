@@ -63,8 +63,7 @@ val cmRecur_def =
     (WF_REL_TAC `measure (\(p, c, j, a, d). SUC j - d)`
     >> fs[ADD1,checkDeltaC_def]);
 
-(* NEEDS TO BE COMMENTED! *)
-
+(* Intermediate lemmas to reason about recursive function bounds *)
 val CMRECUR_LEM = store_thm(
     "CMRECUR_LEM",
     ``!pat all_chars j a d. d <= cmRecur pat all_chars j a d``,
@@ -107,6 +106,7 @@ val CMRECUR_BND_THM = store_thm(
         )
     );
 
+(* Confirming we only get valid values *)
 val CMRECUR_COR_THM = store_thm(
     "CMRECUR_COR_THM",
     ``! pat all_chars j a d . 1 <= cmRecur pat all_chars j a d
@@ -146,13 +146,12 @@ val CMRECUR_COR_THM = store_thm(
         >> fs[])
     );
 
+(* initiate recursion *)
 val cmVal_def =
     Define
     `
     cmVal pat all_chars j a = cmRecur pat all_chars j a 1
     `;
-
-(* END OF NEEDS TO BE COMMENTED *)
 
 (* Relationship between cmVal function and valid_cha_shift specification *)
 val CMVAL_THM = store_thm(
@@ -270,8 +269,7 @@ val smVal_def =
     smVal pat j = smRecur pat j 1
     `;
 
-(* NEEDS TO BE COMMENTED! *)
-
+(* Intermediate lemmas to reason about recursive function bounds *)
 val SMRECUR_LEM = store_thm(
     "SMRECUR_LEM",
     ``!pat j d. d <= smRecur pat j d``,
@@ -313,6 +311,7 @@ val SMRECUR_BND_THM = store_thm(
         )
     );
 
+(* Confirming we only get valid values *)
 val SMRECUR_COR_THM = store_thm(
     "SMRECUR_COR_THM",
     ``! pat all_chars j a d . pat <> []
@@ -366,8 +365,6 @@ val SMRECUR_COR_THM = store_thm(
                 by (ONCE_REWRITE_TAC[smRecur_def] >> fs[])
         >> fs[])
     );
-
-(* END OF NEEDS TO BE COMMENTED *)
 
 (* Relationship between smVal function and valid_suf_shift specification *)
 val SMVAL_THM = store_thm(
