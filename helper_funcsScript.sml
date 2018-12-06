@@ -41,6 +41,27 @@ val EXTRACT_THM = store_thm(
     >> simp[ADD_CLAUSES]
     );
 
+val EXTRACT_BIG_THM = store_thm(
+    "EXTRACT_BIG_THM",
+    ``! i j. j >= LENGTH l
+            ==> (extract (i,j) l = GENLIST (\a. EL (a+i) l) (LENGTH l - i))``,
+    Induct_on `l`
+    >- rw[extract_def]
+    >> map_every Cases_on [`i`,`j`]
+    >> rw[extract_def,GENLIST_CONS]
+    >> simp[combinTheory.o_DEF,ADD_CLAUSES,EL]
+    );
+
+val EXTRACT_GEN_THM = store_thm(
+    "EXTRACT_GEN_THM",
+    ``! i j. extract (i,j) l = GENLIST (\a. EL (a+i) l) (MIN (j - i) (LENGTH l - i))``,
+    rpt STRIP_TAC
+    >> Cases_on `j<= LENGTH l`
+    >- (`MIN (j - i) (LENGTH l - i) = j - i` by simp[MIN_DEF]
+        >> rw[EXTRACT_THM])
+    >- (`MIN (j - i) (LENGTH l - i) = LENGTH l - i` by simp[MIN_DEF]
+        >> rw[EXTRACT_BIG_THM])
+    );
 
 (* -- UNIQUE ELEMS FUNCTION -- *)
 (* Find all unqiue elements in a list *)

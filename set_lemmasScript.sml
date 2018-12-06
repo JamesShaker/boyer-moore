@@ -42,4 +42,16 @@ val MIN_SET_IS_LOWER_BOUND = store_thm(
     >> fs[]
     );
 
+val LOWER_BOUND_IS_MIN_SET = store_thm(
+    "LOWER_BOUND_IS_MIN_SET",
+    ``(x IN s) /\ (!a. a IN s ==> x <= a)
+    ==> (x = MIN_SET s)``,
+    CCONTR_TAC
+    >> fs[]
+    >> `s <> {}` by metis_tac[MEMBER_NOT_EMPTY]
+    >> `x < MIN_SET s` by ((`x <= MIN_SET s` by simp[MIN_SET_LEM]) >> fs[])
+    >> `MIN_SET s <= x` by simp[MIN_SET_LEM]
+    >> fs[]
+    );
+
 val _ = export_theory();
